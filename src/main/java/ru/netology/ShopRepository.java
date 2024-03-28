@@ -1,7 +1,11 @@
 package ru.netology;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShopRepository {
     private Product[] products = new Product[0];
+
 
     /**
      * Вспомогательный метод для имитации добавления элемента в массив
@@ -11,8 +15,16 @@ public class ShopRepository {
      * @return — возвращает новый массив, который выглядит, как тот, что мы передали,
      * но с добавлением нового элемента в конец
      */
-    private Product[] addToArray(Product[] current, Product product) {
+    private Product[] addToArray(Product[] current, Product product) throws AlreadyExistsException {
+        for (Product p : current) {
+            if (p.getId() == product.getId()) {
+                throw new AlreadyExistsException("Product with ID " + product.getId() + " already exists.");
+            }
+        }
+
+
         Product[] tmp = new Product[current.length + 1];
+
         for (int i = 0; i < current.length; i++) {
             tmp[i] = current[i];
         }
@@ -61,4 +73,5 @@ public class ShopRepository {
 
 
     }
+
 }
